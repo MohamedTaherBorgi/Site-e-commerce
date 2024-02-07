@@ -233,7 +233,7 @@
         ]
     },
     "symfony/ux-turbo": {
-        "version": "v2.14.0"
+        "version": "v2.14.2"
     },
     "symfony/validator": {
         "version": "5.4",
