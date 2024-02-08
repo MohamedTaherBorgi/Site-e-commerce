@@ -1,6 +1,6 @@
 # Tunisian E-Commerce
 ## Some tips I found useful [Here](Tips.txt)
-[Symfony 5 Documentation](https://symfony.com/doc/5.x/index.html)
+[Symfony 5 Documentation](https://symfony.com/doc/5.x/index.html){:target="_blank"}
 
-[Twig Documentation](https://twig.symfony.com/doc/)
+[Twig Documentation](https://twig.symfony.com/doc/){:target="_blank"}
 
