@@ -1,0 +1,25 @@
+<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+
+asset:
+{{ asset(path, packageName = null) }}
+
+- path
+  type: string
+
+- packageName (optional)
+
+Returns the public path of the given asset path (which can be a CSS file, a JavaScript file, an image path, etc.).(Goes to public folder on symfony)
+
+############################################################################
+
+<head> Vs. <header>
+
+<head> Element:
+The <head> element is a container for metadata and other information about the HTML document. It is not visible on the webpage itself but contains elements like <title>, <meta>, <link>, <style>, and <script>.
+
+<header> Element:
+The <header> element represents introductory content typically placed at the top of a webpage or within a section of the webpage. It often contains branding, navigation menus, headings, or other elements that provide context or navigation options for the content below.
+
+############################################################################
+
+
