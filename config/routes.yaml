@@ -1,7 +1,7 @@
-app_home:
-    path: /home
-    controller: App\Controller\HomeController::index
+#app_home:
+#  path: /home
+#  controller: App\Controller\HomeController::index
 
-app_register:
-    path: /register
-    controller: App\Controller\RegisterController::index
+#app_register:
+#  path: /register
+#  controller: App\Controller\RegisterController::index
