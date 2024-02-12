@@ -24,8 +24,8 @@ class RegisterController extends AbstractController
 
             //dd($user); //To analyse what's in $user
 
-            $entityManager->persist($user); //Freeze the data
-            $entityManager->flush(); //Execute
+            $entityManager->persist($user); //Freeze the data (kinda like -git commit)
+            $entityManager->flush(); //Execute Queries
         }
 
         return $this->render('register/index.html.twig', [
