@@ -45,7 +45,7 @@
               <span class="hide-menu">UI COMPONENTS</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+              <a class="sidebar-link" href="ui-buttons.html.twig" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
@@ -53,7 +53,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+              <a class="sidebar-link" href="ui-alerts.html.twig" aria-expanded="false">
                 <span>
                   <i class="ti ti-alert-circle"></i>
                 </span>
@@ -61,7 +61,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+              <a class="sidebar-link" href="ui-card.html.twig" aria-expanded="false">
                 <span>
                   <i class="ti ti-cards"></i>
                 </span>
@@ -69,7 +69,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+              <a class="sidebar-link" href="ui-forms.html.twig" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
@@ -77,7 +77,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+              <a class="sidebar-link" href="ui-typography.html.twig" aria-expanded="false">
                 <span>
                   <i class="ti ti-typography"></i>
                 </span>
@@ -89,7 +89,7 @@
               <span class="hide-menu">AUTH</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+              <a class="sidebar-link" href="authentication-login.html.twig" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
@@ -97,7 +97,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+              <a class="sidebar-link" href="authentication-register.html.twig" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
@@ -109,7 +109,7 @@
               <span class="hide-menu">EXTRA</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
+              <a class="sidebar-link" href="icon-tabler.html.twig" aria-expanded="false">
                 <span>
                   <i class="ti ti-mood-happy"></i>
                 </span>
@@ -182,7 +182,7 @@
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                    <a href="authentication-login.html.twig" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
                 </div>
               </li>
@@ -195,32 +195,46 @@
         <div class="container-fluid">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4">Buttons</h5>
-              <div class="card">
-                <div class="card-body p-4">
-                  <button type="button" class="btn btn-primary m-1">Primary</button>
-                  <button type="button" class="btn btn-secondary m-1">Secondary</button>
-                  <button type="button" class="btn btn-success m-1">Success</button>
-                  <button type="button" class="btn btn-danger m-1">Danger</button>
-                  <button type="button" class="btn btn-warning m-1">Warning</button>
-                  <button type="button" class="btn btn-info m-1">Info</button>
-                  <button type="button" class="btn btn-light m-1">Light</button>
-                  <button type="button" class="btn btn-dark m-1">Dark</button>
-                  <button type="button" class="btn btn-link m-1">Link</button>
+              <div class="row">
+                <div class="col-md-4">
+                  <h5 class="card-title fw-semibold mb-4">Card</h5>
+                  <div class="card">
+                    <img src="../assets/images/products/s4.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <h5 class="card-title fw-semibold mb-4">Outline buttons</h5>
-              <div class="card mb-0">
-                <div class="card-body p-4">
-                  <button type="button" class="btn btn-outline-primary m-1">Primary</button>
-                  <button type="button" class="btn btn-outline-secondary m-1">Secondary</button>
-                  <button type="button" class="btn btn-outline-success m-1">Success</button>
-                  <button type="button" class="btn btn-outline-danger m-1">Danger</button>
-                  <button type="button" class="btn btn-outline-warning m-1">Warning</button>
-                  <button type="button" class="btn btn-outline-info m-1">Info</button>
-                  <button type="button" class="btn btn-outline-light m-1">Light</button>
-                  <button type="button" class="btn btn-outline-dark m-1">Dark</button>
-                  <button type="button" class="btn btn-outline-link m-1">Link</button>
+                <div class="col-md-4">
+                  <h5 class="card-title fw-semibold mb-4">Header and footer</h5>
+                  <div class="card">
+                    <div class="card-header">
+                      Featured
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Special title treatment</h5>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h5 class="card-title fw-semibold mb-4">Titles, text, and links</h5>
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's content.</p>
+                      <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
