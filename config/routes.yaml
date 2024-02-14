@@ -1,5 +1,5 @@
 #app_home:
-#  path: /home
+#  path: /client
 #  controller: App\Controller\HomeController::index
 
 #app_register:
