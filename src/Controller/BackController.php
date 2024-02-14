@@ -27,4 +27,10 @@ class BackController extends AbstractController
     {
         return $this->render('back/icon-tabler.html.twig');
     }
+
+    #[Route('/dashboard', name: 'app_dashboard')]
+    public function dashboard(): Response
+    {
+        return $this->render('back/dashboard.html.twig');
+    }
 }
