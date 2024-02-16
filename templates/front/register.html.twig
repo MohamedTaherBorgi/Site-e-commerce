@@ -35,6 +35,7 @@
                                     <select class="form-control" id="stateSelect" onchange="populateCities()">
                                         <option value="">sélectionnez l'état</option>
                                     </select>
+                                    <div id="stateSelectError" class="invalid-feedback d-block"></div>
                                 </div>
 
                                 <div class="mb-3">
@@ -43,6 +44,7 @@
                                     <select class="form-control" id="citySelect" disabled onchange="saveAddress()">
                                         <option value="">Sélectionnez une ville</option>
                                     </select>
+                                    <div id="citySelectError" class="invalid-feedback d-block"></div>
                                 </div>
                                 {{ form_row(form.address, {'attr': {'id': 'register_address'}}) }}
                                 {{ form_row(form.password) }}
@@ -60,6 +62,7 @@
 </div>
 </body>
 <script>
+
     const states = [
         {
             name: "Tunis",
@@ -157,6 +160,20 @@
         });
     }
 
+    function saveAddress() {
+        const state = document.getElementById("stateSelect").value;
+        const city = document.getElementById("citySelect").value;
+        const addressField = document.getElementById("register_address");
+
+        if (state && city) {
+            addressField.value = state + ", " + city;
+            return true;
+        } else if ((state && !city) || (!state)) {
+            addressField.value = '';
+            return false;
+        }
+    }
+
     function populateCities() {
         const stateName = document.getElementById("stateSelect").value;
         const citySelect = document.getElementById("citySelect");
@@ -183,17 +200,22 @@
         }
     }
 
-    function saveAddress() {
-        const state = document.getElementById("stateSelect").value;
-        const city = document.getElementById("citySelect").value;
-        const addressField = document.getElementById("register_address");
-
-        if (state && city) {
-            addressField.value = state + ", " + city;
-        } else if ((state && !city) || (!state)) {
-            addressField.value = '';
+    function validateForm() {
+        if (!saveAddress()) {
+            document.getElementById("stateSelectError").innerHTML = 'Veuillez sélectionner un état';
+            return false;
         }
+        return true;
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('submit').addEventListener('click', function (event) {
+            // Perform your validation here
+            if (!validateForm()) {
+                event.preventDefault(); // Prevent the form from submitting
+            }
+        });
+    });
 
     // Populate states when the page loads
     populateStates();
