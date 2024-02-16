@@ -24,7 +24,32 @@
                             </a>
                             <p class="text-center">Your Social Campaigns</p>
                             {% block content %}
-                                {{ form(form) }}
+                                {{ form_start(form) }}
+                                {{ form_row(form.firstname) }}
+                                {{ form_row(form.lastname) }}
+                                {{ form_row(form.email) }}
+                                {{ form_row(form.date_of_birth) }}
+                                <div class="mb-3">
+                                    <label class="form-label required" for="stateSelect">Sélectionnez votre état
+                                        :</label>
+                                    <select class="form-control" id="stateSelect" onchange="populateCities()">
+                                        <option value="">sélectionnez l'état</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label required" for="citySelect">Sélectionnez votre ville
+                                        :</label>
+                                    <select class="form-control" id="citySelect" disabled onchange="saveAddress()">
+                                        <option value="">Sélectionnez une ville</option>
+                                    </select>
+                                </div>
+                                {{ form_row(form.address, {'attr': {'id': 'register_address'}}) }}
+                                {{ form_row(form.password) }}
+                                <center>
+                                    {{ form_row(form.submit) }}
+                                </center>
+                                {{ form_end(form) }}
                             {% endblock %}
                         </div>
                     </div>
@@ -34,6 +59,145 @@
     </div>
 </div>
 </body>
+<script>
+    const states = [
+        {
+            name: "Tunis",
+            cities: ["Tunis", "Le Bardo", "Le Kram", "La Goulette", "Carthage", "Sidi Bou Said", "La Marsa", "Sidi Hassine"]
+        },
+        {
+            name: "Ariana",
+            cities: ["Ariana", "La Soukra", "Raoued", "Kalâat el-Andalous", "Sidi Thabet", "Ettadhamen-Mnihla"]
+        },
+        {
+            name: "Ben Arous",
+            cities: ["Ben Arous", "El Mourouj", "Hammam Lif", "Hammam Chott", "Bou Mhel el-Bassatine", "Ezzahra", "Radès", "Mégrine", "Mohamedia-Fouchana", "Mornag", "Khalidia"]
+        },
+        {
+            name: "Manouba",
+            cities: ["Manouba", "Den Den", "Douar Hicher", "Oued Ellil", "Mornaguia", "Borj El Amri", "Djedeida", "Tebourba", "El Battan"]
+        },
+        {
+            name: "Nabeul",
+            cities: ["Nabeul", "Dar Chaabane", "Béni Khiar", "El Maâmoura", "Somâa", "Korba", "Tazerka", "Menzel Temime", "Menzel Horr", "El Mida", "Kelibia", "Azmour", "Hammam Ghezèze", "Dar Allouch", "El Haouaria", "Takelsa", "Soliman", "Korbous", "Menzel Bouzelfa", "Béni Khalled", "Zaouiet Djedidi", "Grombalia", "Bou Argoub", "Hammamet"]
+        },
+        {name: "Zaghouan", cities: ["Zaghouan", "Zriba", "Bir Mcherga", "Djebel Oust", "El Fahs", "Nadhour"]},
+        {
+            name: "Bizerte",
+            cities: ["Bizerte", "Sejnane", "Mateur", "Menzel Bourguiba", "Tinja", "Ghar al Milh", "Aousja", "Menzel Jemil", "Menzel Abderrahmane", "El Alia", "Ras Jebel", "Metline", "Raf Raf"]
+        },
+        {
+            name: "Béja",
+            cities: ["Béja", "El Maâgoula", "Zahret Medien", "Nefza", "Téboursouk", "Testour", "Goubellat", "Majaz al Bab"]
+        },
+        {
+            name: "Jendouba",
+            cities: ["Jendouba", "Bou Salem", "Tabarka", "Aïn Draham", "Fernana", "Beni MTir", "Ghardimaou", "Oued Melliz"]
+        },
+        {
+            name: "Kef",
+            cities: ["Kef", "Nebeur", "Touiref", "Sakiet Sidi Youssef", "Tajerouine", "Menzel Salem", "Kalaat es Senam", "Kalâat Khasba", "Jérissa", "El Ksour", "Dahmani", "Sers"]
+        },
+        {
+            name: "Siliana",
+            cities: ["Siliana", "Bou Arada", "Gaâfour", "El Krib", "Sidi Bou Rouis", "Maktar", "Rouhia", "Kesra", "Bargou", "El Aroussa"]
+        },
+        {
+            name: "Sousse",
+            cities: ["Sousse", "Ksibet Thrayet", "Ezzouhour", "Zaouiet Sousse", "Hammam Sousse", "Akouda", "Kalâa Kebira", "Sidi Bou Ali", "Hergla", "Enfidha", "Bouficha", "Sidi El Hani", "Msaken", "Kalâa Seghira", "Messaadine", "Kondar"]
+        },
+        {
+            name: "Monastir",
+            cities: ["Monastir", "Khniss", "Ouerdanin", "Sahline Moôtmar", "Sidi Ameur", "Zéramdine", "Beni Hassen", "Ghenada", "Jemmal", "Menzel Kamel", "Zaouiet Kontoch", "Bembla-Mnara", "Menzel Ennour", "El Masdour", "Moknine", "Sidi Bennour", "Menzel Farsi", "Amiret El Fhoul", "Amiret Touazra", "Amiret El Hojjaj", "Cherahil", "Bekalta", "Téboulba", "Ksar Hellal", "Ksibet El Mediouni", "Benen Bodher", "Touza", "Sayada", "Lemta", "Bouhjar", "Menzel Hayet"]
+        },
+        {
+            name: "Mahdia",
+            cities: ["Mahdia", "Rejiche", "Bou Merdes", "Ouled Chamekh", "Chorbane", "Hebira", "Essouassi", "El Djem", "Kerker", "Chebba", "Melloulèche", "Sidi Alouane", "Ksour Essef", "El Bradâa"]
+        },
+        {
+            name: "Sfax",
+            cities: ["Sfax", "Sakiet Ezzit", "Chihia", "Sakiet Eddaïer", "Gremda", "El Ain", "Thyna", "Agareb", "Jebiniana", "El Hencha", "Menzel Chaker", "Ghraïba, Tunisia", "Bir Ali Ben Khélifa", "Skhira", "Mahares", "Kerkennah"]
+        },
+        {
+            name: "Kairouan",
+            cities: ["Kairouan", "Chebika", "Sbikha", "Oueslatia", "Aïn Djeloula", "Haffouz", "Alaâ", "Hajeb El Ayoun", "Nasrallah", "Menzel Mehiri", "Echrarda", "Bou Hajla"]
+        },
+        {
+            name: "Kasserine",
+            cities: ["Kasserine", "Sbeitla", "Sbiba", "Jedelienne", "Thala", "Haïdra", "Foussana", "Fériana", "Thélepte", "Magel Bel Abbès"]
+        },
+        {
+            name: "Sidi Bouzid",
+            cities: ["Sidi Bouzid, Jilma", "Cebalet", "Bir El Hafey", "Sidi Ali Ben Aoun", "Menzel Bouzaiane", "Meknassy", "Mezzouna", "Regueb", "Ouled Haffouz"]
+        },
+        {
+            name: "Gabès",
+            cities: ["Gabès", "Chenini Nahal", "Ghannouch", "Métouia", "Oudhref", "El Hamma", "Matmata", "Nouvelle Matmata", "Mareth", "Zarat"]
+        },
+        {
+            name: "Medenine",
+            cities: ["Medenine", "Beni Khedache", "Ben Gardane", "Zarzis", "Houmt El Souk (Djerba)", "Midoun (Djerba)", "Ajim (Djerba)"]
+        },
+        {name: "Tataouine", cities: ["Tataouine", "Bir Lahmar", "Ghomrassen", "Dehiba", "Remada"]},
+        {
+            name: "Gafsa",
+            cities: ["Gafsa", "El Ksar", "Moularès", "Redeyef", "Métlaoui", "Mdhila", "El Guettar", "Sened"]
+        },
+        {name: "Tozeur", cities: ["Tozeur", "Degache", "Hamet Jerid", "Nafta", "Tamerza"]},
+        {name: "Kebili", cities: ["Kebili", "Djemna", "Douz", "El Golâa", "Souk Lahad"]}
+    ];
+
+    function populateStates() {
+        const stateSelect = document.getElementById("stateSelect");
+        states.forEach(function (state) {
+            const option = document.createElement("option");
+            option.text = state.name;
+            option.value = state.name;
+            stateSelect.appendChild(option);
+        });
+    }
+
+    function populateCities() {
+        const stateName = document.getElementById("stateSelect").value;
+        const citySelect = document.getElementById("citySelect");
+        const addressField = document.getElementById("register_address");
+
+        // Clear previous options and address field
+        citySelect.innerHTML = '<option value="">Sélectionnez une ville</option>';
+        addressField.value = '';
+
+        if (stateName) {
+            const selectedState = states.find(state => state.name === stateName);
+            selectedState.cities.forEach(function (city) {
+                const option = document.createElement("option");
+                option.text = city;
+                option.value = city;
+                citySelect.appendChild(option);
+            });
+
+            // Enable city select
+            citySelect.disabled = false;
+        } else {
+            // Disable city select if no state is selected
+            citySelect.disabled = true;
+        }
+    }
+
+    function saveAddress() {
+        const state = document.getElementById("stateSelect").value;
+        const city = document.getElementById("citySelect").value;
+        const addressField = document.getElementById("register_address");
+
+        if (state && city) {
+            addressField.value = state + ", " + city;
+        } else if ((state && !city) || (!state)) {
+            addressField.value = '';
+        }
+    }
+
+    // Populate states when the page loads
+    populateStates();
+</script>
 <script src="back-assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="back-assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </html>
