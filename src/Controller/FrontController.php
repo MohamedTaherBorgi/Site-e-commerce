@@ -55,10 +55,4 @@ class FrontController extends AbstractController
     {
         return $this->render('front/pay.html.twig');
     }
-
-    #[Route('/test', name: 'app_test')]
-    public function test(): Response
-    {
-        return $this->render('front/test.html.twig');
-    }
 }
