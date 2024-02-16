@@ -77,7 +77,7 @@ class RegisterType extends AbstractType
                     new AgeUnder18(),
                 ],
             ])
-            ->add('address', TextType::class, ['required' => false])
+            ->add('address', TextType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Veuillez confirmer votre mot de passe',
