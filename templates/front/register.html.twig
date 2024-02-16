@@ -25,17 +25,21 @@
                             <p class="text-center">Your Social Campaigns</p>
                             {% block content %}
                                 {{ form_start(form) }}
+
                                 {{ form_row(form.firstname) }}
+
                                 {{ form_row(form.lastname) }}
+
                                 {{ form_row(form.email) }}
+
                                 {{ form_row(form.date_of_birth) }}
+
                                 <div class="mb-3">
                                     <label class="form-label required" for="stateSelect">Sélectionnez votre état
                                         :</label>
                                     <select class="form-control" id="stateSelect" onchange="populateCities()">
                                         <option value="">sélectionnez l'état</option>
                                     </select>
-                                    <div id="stateSelectError" class="invalid-feedback d-block"></div>
                                 </div>
 
                                 <div class="mb-3">
@@ -44,14 +48,24 @@
                                     <select class="form-control" id="citySelect" disabled onchange="saveAddress()">
                                         <option value="">Sélectionnez une ville</option>
                                     </select>
-                                    <div id="citySelectError" class="invalid-feedback d-block"></div>
+                                    {{ form_errors(form.address) }}
                                 </div>
-                                {{ form_row(form.address, {'attr': {'id': 'register_address'}}) }}
+
+                                <div hidden>
+                                    {{ form_row(form.address) }}
+                                </div>
+
                                 {{ form_row(form.password) }}
+
                                 <center>
                                     {{ form_row(form.submit) }}
                                 </center>
+
                                 {{ form_end(form) }}
+
+                                <script>
+
+                                </script>
                             {% endblock %}
                         </div>
                     </div>
@@ -158,6 +172,21 @@
             option.value = state.name;
             stateSelect.appendChild(option);
         });
+
+        // Restore selected state from sessionStorage
+        const selectedState = sessionStorage.getItem("selectedState");
+        if (selectedState) {
+            stateSelect.value = selectedState;
+            populateCities();
+
+            // Restore selected city
+            const selectedCity = sessionStorage.getItem("selectedCity");
+            if (selectedCity) {
+                const citySelect = document.getElementById("citySelect");
+                citySelect.value = selectedCity;
+            }
+        }
+        saveAddress();
     }
 
     function saveAddress() {
@@ -167,11 +196,13 @@
 
         if (state && city) {
             addressField.value = state + ", " + city;
-            return true;
         } else if ((state && !city) || (!state)) {
             addressField.value = '';
-            return false;
         }
+
+        // Save selected state and city to sessionStorage
+        sessionStorage.setItem("selectedState", state);
+        sessionStorage.setItem("selectedCity", city);
     }
 
     function populateCities() {
@@ -200,24 +231,8 @@
         }
     }
 
-    function validateForm() {
-        if (!saveAddress()) {
-            document.getElementById("stateSelectError").innerHTML = 'Veuillez sélectionner un état';
-            return false;
-        }
-        return true;
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('submit').addEventListener('click', function (event) {
-            // Perform your validation here
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent the form from submitting
-            }
-        });
-    });
-
     // Populate states when the page loads
+    //saveAddress();
     populateStates();
 </script>
 <script src="back-assets/libs/jquery/dist/jquery.min.js"></script>

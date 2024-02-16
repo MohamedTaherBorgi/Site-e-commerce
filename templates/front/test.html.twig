@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-fill ID</title>
+</head>
+<body>
+
+<form id="myForm" action="/action_page.php">
+    <label for="fname">First name:</label>
+    <input type="text" id="fname" name="fname"><br><br>
+    <label for="lname">ID:</label>
+    <input disabled type="text" id="id" name="id"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    document.getElementById("fname").addEventListener("input", function() {
+        var firstName = this.value.trim(); // Get the trimmed value of the first name input
+        var lastName = ""; // Initialize last name
+        if (firstName) {
+            // Split the first name by space to get the individual parts
+            var nameParts = firstName.split(" ");
+            // Capitalize each part and join with a hyphen
+            lastName = nameParts.map(function(part) {
+                return part.charAt(0).toUpperCase() + part.slice(1);
+            }).join("-");
+        }
+        document.getElementById("id").value = lastName; // Set the value of the ID input
+    });
+</script>
+
+</body>
+</html>
