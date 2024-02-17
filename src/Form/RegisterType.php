@@ -4,14 +4,10 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Validator\AgeUnder18;
-use DateTime;
 
-// Or just call /DateType from global classes(namespaces)
-// and then you have to use 'data' => new /DateTime('today')
+// Or just call /DateType from global classes(namespaces) and then you have to use 'data' => new /DateTime('today')
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

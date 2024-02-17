@@ -18,6 +18,15 @@ security:
     main:
       lazy: true
       provider: app_user_provider
+      custom_authenticator: App\Security\LoginFormAuthenticator
+      logout:
+        path: app_logout
+        # target: where to redirect after logout
+        target: app_register
+      remember_me:
+        name: REMEMBER_ME_COOKIE
+        secret: '%kernel.secret%'
+        lifetime: 604800
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall

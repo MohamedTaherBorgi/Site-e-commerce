@@ -1,0 +1,8 @@
+{% extends 'security/register.html.twig' %}
+
+{% block content %}
+    Hello {{ app.user.firstname }}
+    <br>
+    <br>
+    {{ dump(app.user) }}
+{% endblock %}

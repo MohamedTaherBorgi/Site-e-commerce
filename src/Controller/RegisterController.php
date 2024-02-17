@@ -33,7 +33,7 @@ class RegisterController extends AbstractController
             $entityManager->flush(); //Execute Queries
         }
 
-        return $this->render('front/register.html.twig', [
+        return $this->render('security/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
