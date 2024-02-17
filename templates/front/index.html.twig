@@ -57,19 +57,27 @@
                             <option value="usd">¥ JPY (Yen)</option>
                         </select>
                     </li>
-                    <li>
-                        <center>
-                            <a href="register" class="login-link">
-                                <i class="biolife-icon icon-login"></i>Register</a>
-                        </center>
-                    </li>
-
-                    <li>
-                        <center>
-                            <a href="login" class="login-link">
-                                <i class="biolife-icon icon-login"></i>Login</a>
-                        </center>
-                    </li>
+                    {% if app.user %}
+                        <li>
+                            <center>
+                                <a href="account" class="login-link">
+                                    <i class="biolife-icon icon-login"></i>Account</a>
+                            </center>
+                        </li>
+                    {% else %}
+                        <li>
+                            <center>
+                                <a href="register" class="login-link">
+                                    <i class="biolife-icon icon-login"></i>Register</a>
+                            </center>
+                        </li>
+                        <li>
+                            <center>
+                                <a href="login" class="login-link">
+                                    <i class="biolife-icon icon-login"></i>Login</a>
+                            </center>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
