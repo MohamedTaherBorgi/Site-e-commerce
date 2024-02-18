@@ -164,31 +164,6 @@
         {name: "Kebili", cities: ["Kebili", "Djemna", "Douz", "El Golâa", "Souk Lahad"]}
     ];
 
-    function populateStates() {
-        const stateSelect = document.getElementById("stateSelect");
-        states.forEach(function (state) {
-            const option = document.createElement("option");
-            option.text = state.name;
-            option.value = state.name;
-            stateSelect.appendChild(option);
-        });
-
-        // Restore selected state from sessionStorage
-        const selectedState = sessionStorage.getItem("selectedState");
-        if (selectedState) {
-            stateSelect.value = selectedState;
-            populateCities();
-
-            // Restore selected city
-            const selectedCity = sessionStorage.getItem("selectedCity");
-            if (selectedCity) {
-                const citySelect = document.getElementById("citySelect");
-                citySelect.value = selectedCity;
-            }
-        }
-        saveAddress();
-    }
-
     function saveAddress() {
         const state = document.getElementById("stateSelect").value;
         const city = document.getElementById("citySelect").value;
@@ -231,8 +206,36 @@
         }
     }
 
-    // Populate states when the page loads
+    function populateStates() {
+        const stateSelect = document.getElementById("stateSelect");
+        states.forEach(function (state) {
+            const option = document.createElement("option");
+            option.text = state.name;
+            option.value = state.name;
+            stateSelect.appendChild(option);
+        });
+
+        //     // Restore selected state from sessionStorage
+        // const selectedState = sessionStorage.getItem("selectedState");
+        // if (selectedState) {
+        //     stateSelect.value = selectedState;
+
+        populateCities();
+
+        //     // Restore selected city
+        //     const selectedCity = sessionStorage.getItem("selectedCity");
+        //     if (selectedCity) {
+        //         const citySelect = document.getElementById("citySelect");
+        //         citySelect.value = selectedCity;
+        //     }
+        // }
+
+        saveAddress();
+    }
+
     //saveAddress();
+
+    // Populate states when the page loads
     populateStates();
 </script>
 <script src="back-assets/libs/jquery/dist/jquery.min.js"></script>

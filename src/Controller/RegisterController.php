@@ -16,8 +16,10 @@ class RegisterController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
     {
+        //This means if user connected and types /register it redirects him to redirectToRoute('...');
+
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_account');
+            return $this->redirectToRoute('app_home');
         }
 
         $user = new User();
@@ -35,6 +37,8 @@ class RegisterController extends AbstractController
 
             $entityManager->persist($user); //Freeze the data (kinda like -git commit)
             $entityManager->flush(); //Execute Queries
+
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/register.html.twig', [
