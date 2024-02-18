@@ -1,8 +1,11 @@
-{% extends 'security/register.html.twig' %}
+{% extends 'front/index.html.twig' %}
 
 {% block content %}
-    Hello {{ app.user.firstname }}
     <br>
-    <br>
-    {{ dump(app.user) }}
+    <div class="row" style="margin-inline: 200px">
+        Hello {{ app.user.firstname }}
+        <br>
+        <br>
+        {{ dump(app.user) }}
+    </div>
 {% endblock %}
