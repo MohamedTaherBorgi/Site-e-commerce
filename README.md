@@ -1,3 +1,5 @@
+#First things first : composer install
+
 # EcoSanté - Votre Santé, Notre Planète
 Bienvenue sur EcoSanté, une plateforme de commerce électronique révolutionnaire dédiée à la santé et à la durabilité.
 
