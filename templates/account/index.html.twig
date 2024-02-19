@@ -3,9 +3,17 @@
 {% block content %}
     <br>
     <div class="row" style="margin-inline: 200px">
-        Hello {{ app.user.firstname }}
-        <br>
-        <br>
-        {{ dump(app.user) }}
+        <h1>User Details</h1>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>First Name:</strong> {{ user.firstname }}</li>
+            <li class="list-group-item"><strong>Last Name:</strong> {{ user.lastname }}</li>
+            <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+            <li class="list-group-item"><strong>Date of Birth:</strong> {{ user.dateOfBirth|date('Y-m-d') }}</li>
+            <li class="list-group-item"><strong>Address:</strong> {{ user.address }}</li>
+        </ul>
+        <center>
+            <a href="{{ path('app_account_edit') }}" class="btn btn-primary btn-lg">Modifier</a>
+        </center>
     </div>
+    <br>
 {% endblock %}
