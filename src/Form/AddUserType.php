@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class UserType extends AbstractType
+class AddUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -84,6 +84,14 @@ class UserType extends AbstractType
                     ])
                 ]
             ])
+            //->add('roles')
+            ->add('date_of_birth', DateType::class, [
+                'years' => range(date('Y') - 100, date('Y')), // Allow selection of past 100 years
+                'data' => new \DateTime('today'),
+                'constraints' => [
+                    new AgeUnder18()
+                ]
+            ])
             ->add('address', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -91,7 +99,28 @@ class UserType extends AbstractType
                         'message' => 'Veuillez entrer votre addresse (État & Ville).',
                     ])
                 ]
-            ]);
+            ])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Veuillez confirmer votre mot de passe',
+                'required' => false, //it's not necessary since it can't be null in the User entity
+                'first_options' => ['label' => 'Ajouter un mot de passe :', 'attr' => ['placeholder' => 'Entrer votre mot de passe']],
+                'second_options' => ['label' => 'Confirmer le mot de passe :', 'attr' => ['placeholder' => 'Confirmer votre mot de passe']],
+                'constraints' => [
+                    new Length([
+                        'min' => 8,
+                        'minMessage' => 'Le mot de passe doit avoir au moins {{ limit }} caractères.'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
+                        'message' => 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.'
+                    ]),
+                    new NotBlank([
+                        'message' => 'Veuillez entrer votre mot de passe.',
+                    ])
+                ]
+            ])
+            ->add('submit', SubmitType::class, ['label' => "Ajouter utilisateur"]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
