@@ -205,20 +205,31 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
-
                     {% block content %}
                         <h1>User index</h1>
+
+                        <label for="searchInput" class="badge bg-primary rounded-3 fw-semibold"
+                               style="margin-right: 4px">Recherche :</label>
+                        <input type="text" id="searchInput" placeholder="Entrez le terme...">
+                        <select id="searchCategory">
+                            <option value="1">ID</option>
+                            <option value="2">Email</option>
+                            <option value="4">First Name</option>
+                            <option value="5">Last Name</option>
+                        </select>
+                        <button id="searchButton" class="btn btn-success m-1">Rechercher</button>
+                        <button id="clearButton" class="btn btn-warning m-1">Effacer</button>
 
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Email</th>
-                                <th>Roles</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Address</th>
-                                <th>Date_of_birth</th>
+                                <th><a href="#" class="sort" data-column="1">Id</a></th>
+                                <th><a href="#" class="sort" data-column="2">Email</a></th>
+                                <th><a href="#" class="sort" data-column="3">Roles</a></th>
+                                <th><a href="#" class="sort" data-column="4">Firstname</a></th>
+                                <th><a href="#" class="sort" data-column="5">Lastname</a></th>
+                                <th><a href="#" class="sort" data-column="6">Address</a></th>
+                                <th><a href="#" class="sort" data-column="7">Date_of_birth</a></th>
                                 <th>actions</th>
                             </tr>
                             </thead>
@@ -240,16 +251,186 @@
                                 </tr>
                             {% else %}
                                 <tr>
-                                    <td colspan="9">no records found</td>
+                                    <td colspan="8">no records found</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
 
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const headers = document.querySelectorAll(".sort");
+                                headers.forEach(header => {
+                                    header.addEventListener("click", () => {
+                                        const column = parseInt(header.dataset.column);
+                                        const order = header.dataset.order || "asc";
+                                        const direction = order === "desc" ? "asc" : "desc";
+
+                                        // Remove 'sorted' class from all other headers
+                                        headers.forEach(h => h.classList.remove("sorted"));
+
+                                        // Update data attributes
+                                        header.dataset.order = direction;
+                                        header.classList.add("sorted");
+
+                                        // Sort the table
+                                        sortTable(column, direction);
+                                    });
+                                });
+
+                                const searchInput = document.getElementById("searchInput");
+                                const searchCategory = document.getElementById("searchCategory");
+                                const searchButton = document.getElementById("searchButton");
+                                const clearButton = document.getElementById("clearButton");
+
+                                searchButton.addEventListener("click", () => {
+                                    searchTable();
+                                });
+
+                                clearButton.addEventListener("click", () => {
+                                    searchInput.value = "";
+                                    searchTable();
+                                });
+
+                                function searchTable() {
+                                    const searchTerm = searchInput.value.toLowerCase();
+                                    const category = parseInt(searchCategory.value);
+                                    const rows = document.querySelectorAll(".table tbody tr");
+
+                                    rows.forEach(row => {
+                                        const value = row.querySelector(`td:nth-child(${category})`).textContent.trim().toLowerCase();
+
+                                        if (value.includes(searchTerm)) {
+                                            row.style.display = "";
+                                        } else {
+                                            row.style.display = "none";
+                                        }
+                                    });
+                                }
+
+                                function sortTable(column, direction) {
+                                    const table = document.querySelector(".table");
+                                    const tbody = table.querySelector("tbody");
+                                    const rows = Array.from(tbody.querySelectorAll("tr"));
+
+                                    const sortFunction = (a, b) => {
+                                        const aValue = a.querySelector(`td:nth-child(${column})`).textContent.trim();
+                                        const bValue = b.querySelector(`td:nth-child(${column})`).textContent.trim();
+                                        return direction === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                                    };
+
+                                    rows.sort(sortFunction);
+
+                                    // Empty the table body and re-append rows in sorted order
+                                    while (tbody.firstChild) {
+                                        tbody.removeChild(tbody.firstChild);
+                                    }
+
+                                    rows.forEach(row => tbody.appendChild(row));
+                                }
+                            });
+                        </script>
+
                         <a href="{{ path('app_user_new') }}">Create new</a>
 
-                    {% endblock %}
+                        <style>
 
+                            * {
+                                box-sizing: border-box;
+                            }
+
+                            body {
+                                background-color: #f9fafb;
+                                font-family: "Open Sans", sans-serif;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                min-height: 100vh;
+                                margin: 0;
+                            }
+
+                            .container {
+                                background-color: #fff;
+                                border-radius: 10px;
+                                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                                width: 740px;
+                            }
+
+                            h1 {
+                                text-align: center;
+                                margin: 20px 0;
+                                color: #565656;
+                            }
+
+                            @media all and (max-width: 780px) {
+                                .container {
+                                    width: auto;
+                                }
+                            }
+
+                            @media all and (max-width: 400px) {
+                                .container {
+                                    padding: 0px 20px;
+                                }
+                            }
+                        </style>
+
+                        <div class="container">
+                            <h1>Pie Chart for Users & Admins</h1>
+                            <div>
+                                <canvas id="pie-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- JavaScript to generate the pie chart -->
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <script>
+                            // Get the table rows
+                            const rows = document.querySelectorAll('.table tbody tr');
+
+                            // Initialize counts for users and admins
+                            let userCount = 0;
+                            let adminCount = 0;
+
+                            // Loop through the rows to count users and admins
+                            rows.forEach(row => {
+                                const roleCell = row.querySelector('td:nth-child(3)');
+                                if (roleCell) {
+                                    const roles = roleCell.textContent.trim().toLowerCase();
+                                    if (roles.includes('admin')) {
+                                        adminCount++;
+                                    } else {
+                                        userCount++;
+                                    }
+                                }
+                            });
+
+                            // Define data and options for the chart
+                            const data = {
+                                labels: ["Users", "Admins"],
+                                datasets: [{
+                                    backgroundColor: ["#e63946", "#254BDD"],
+                                    data: [userCount, adminCount]
+                                }]
+                            };
+
+                            const options = {
+                                title: {
+                                    display: true,
+                                    text: 'Pie Chart for Users & Admins'
+                                },
+                                responsive: true
+                            };
+
+                            // Create a new pie chart instance
+                            new Chart(document.getElementById('pie-chart'), {
+                                type: 'pie',
+                                data: data,
+                                options: options
+                            });
+                        </script>
+
+                    {% endblock %}
                 </div>
             </div>
         </div>

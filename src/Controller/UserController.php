@@ -28,12 +28,6 @@ class UserController extends AbstractController
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
     {
-        //This means if user connected and types /register it redirects him to redirectToRoute('...');
-
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_home');
-        }
-
         $user = new User();
         $form = $this->createForm(AddUserType::class, $user);
 
