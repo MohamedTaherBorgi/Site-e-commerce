@@ -201,11 +201,10 @@
             </nav>
         </header>
         <!--  Header End -->
-
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    {% block content %}
+        {% block content %}
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
                         <h1>User index</h1>
 
                         <label for="searchInput" class="badge bg-primary rounded-3 fw-semibold"
@@ -219,6 +218,10 @@
                         </select>
                         <button id="searchButton" class="btn btn-success m-1">Rechercher</button>
                         <button id="clearButton" class="btn btn-warning m-1">Effacer</button>
+                        <button id="download-btn-users">Download PNG</button>
+
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
                         <table class="table">
                             <thead>
@@ -328,10 +331,25 @@
 
                                     rows.forEach(row => tbody.appendChild(row));
                                 }
+
+                                var downloadBtn = document.getElementById("download-btn-users");
+                                var table = document.querySelector(".table");
+
+                                downloadBtn.addEventListener("click", function() {
+                                    html2canvas(table).then(function(canvas) {
+                                        canvas.toBlob(function(blob) {
+                                            saveAs(blob, 'table.png');
+                                        });
+                                    });
+                                });
                             });
                         </script>
 
                         <a href="{{ path('app_user_new') }}">Create new</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
 
                         <style>
 
@@ -374,66 +392,184 @@
                                 }
                             }
                         </style>
-
-                        <div class="container">
-                            <h1>Pie Chart for Users & Admins</h1>
-                            <div>
-                                <canvas id="pie-chart"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- JavaScript to generate the pie chart -->
                         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                        <script>
-                            // Get the table rows
-                            const rows = document.querySelectorAll('.table tbody tr');
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
-                            // Initialize counts for users and admins
-                            let userCount = 0;
-                            let adminCount = 0;
+                        <div class="row">
+                            <div class="container" style="width: 48%">
+                                <h1>Pie Chart for Users & Admins</h1>
+                                <div>
+                                    <canvas id="pie-chart"></canvas>
+                                    <button id="download-btn">Download PDF</button>
+                                </div>
+                            </div>
+                            <!-- JavaScript to generate the pie chart -->
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    // Get the table rows
+                                    const rows = document.querySelectorAll('.table tbody tr');
 
-                            // Loop through the rows to count users and admins
-                            rows.forEach(row => {
-                                const roleCell = row.querySelector('td:nth-child(3)');
-                                if (roleCell) {
-                                    const roles = roleCell.textContent.trim().toLowerCase();
-                                    if (roles.includes('admin')) {
-                                        adminCount++;
-                                    } else {
-                                        userCount++;
+                                    // Initialize counts for users and admins
+                                    let userCount = 0;
+                                    let adminCount = 0;
+
+                                    // Loop through the rows to count users and admins
+                                    rows.forEach(row => {
+                                        const roleCell = row.querySelector('td:nth-child(3)');
+                                        if (roleCell) {
+                                            const roles = roleCell.textContent.trim().toLowerCase();
+                                            if (roles.includes('admin')) {
+                                                adminCount++;
+                                            } else {
+                                                userCount++;
+                                            }
+                                        }
+                                    });
+
+                                    // Define data and options for the chart
+                                    const data = {
+                                        labels: ["Admins", "Users"],
+                                        datasets: [{
+                                            backgroundColor: ["#e63946", "#254BDD"],
+                                            data: [adminCount, userCount]
+                                        }]
+                                    };
+
+                                    const options = {
+                                        title: {
+                                            display: true,
+                                            text: 'Pie Chart for Users & Admins'
+                                        },
+                                        responsive: true
+                                    };
+
+                                    // Create a new pie chart instance
+                                    const pieChart = new Chart(document.getElementById('pie-chart'), {
+                                        type: 'pie',
+                                        data: data,
+                                        options: options
+                                    });
+
+                                    // Function to download the chart as PNG
+                                    // Function to download the chart as PDF
+                                    function downloadPDF() {
+                                        const element = document.getElementById('pie-chart');
+                                        html2pdf()
+                                            .from(element)
+                                            .save('pie-chart.pdf');
                                     }
+
+                                    // Attach event listener to the download button
+                                    document.getElementById('download-btn').addEventListener('click', downloadPDF);
+                                });
+                            </script>
+
+
+                            <div class="container" style="width: 48%">
+                                <h1>Pie Chart for Ages</h1>
+                                <div>
+                                    <canvas id="bar-chart"></canvas>
+                                </div>
+                                <button onclick="downloadPDF()">Download PDF</button>
+                            </div>
+                            <!-- JavaScript to generate the bar chart -->
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    // Get all the table rows
+                                    const rows = document.querySelectorAll('.table tbody tr');
+
+                                    // Define age groups starting from 18
+                                    const ageGroups = [
+                                        {min: 18, max: 25, label: '18-25'},
+                                        {min: 26, max: 35, label: '26-35'},
+                                        {min: 36, max: 45, label: '36-45'},
+                                        {min: 46, max: Infinity, label: '45+'}, // New age group for 45 and above
+                                        // Add more age groups as needed
+                                    ];
+
+                                    // Initialize counts for each age group
+                                    const ageGroupCounts = {};
+
+                                    // Initialize counts for each age group
+                                    ageGroups.forEach(group => {
+                                        ageGroupCounts[group.label] = 0;
+                                    });
+
+                                    // Calculate age group for each user
+                                    rows.forEach(row => {
+                                        const dateOfBirthString = row.querySelector('td:nth-child(7)').textContent.trim(); // Assuming date of birth is in the 7th column
+                                        const dateOfBirth = new Date(dateOfBirthString);
+                                        const age = calculateAge(dateOfBirth);
+
+                                        // Update counts for age group
+                                        ageGroups.forEach(group => {
+                                            if (age >= group.min && age <= group.max) {
+                                                ageGroupCounts[group.label]++;
+                                            }
+                                        });
+                                    });
+
+                                    // Extract data for chart
+                                    const labels = ageGroups.map(group => group.label);
+                                    const data = ageGroups.map(group => ageGroupCounts[group.label]);
+
+                                    // Define chart options
+                                    const options = {
+                                        title: {
+                                            display: true,
+                                            text: 'Distribution of Users by Age Group',
+                                        },
+                                        responsive: true,
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                },
+                                            }],
+                                        },
+                                    };
+
+                                    // Create a new bar chart instance
+                                    const barChart = new Chart(document.getElementById('bar-chart'), {
+                                        type: 'bar',
+                                        data: {
+                                            labels: labels,
+                                            datasets: [{
+                                                label: 'Distribution by age groups',
+                                                data: data,
+                                                backgroundColor: ['#e63946', '#254BDD', '#ffbe0b', '#1d3557'],
+                                            }],
+                                        },
+                                        options: options,
+                                    });
+                                });
+
+                                // Function to calculate age based on date of birth
+                                function calculateAge(dateOfBirth) {
+                                    const today = new Date();
+                                    const birthDate = new Date(dateOfBirth);
+                                    let age = today.getFullYear() - birthDate.getFullYear();
+                                    const month = today.getMonth() - birthDate.getMonth();
+                                    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                                        age--;
+                                    }
+                                    return age;
                                 }
-                            });
 
-                            // Define data and options for the chart
-                            const data = {
-                                labels: ["Users", "Admins"],
-                                datasets: [{
-                                    backgroundColor: ["#e63946", "#254BDD"],
-                                    data: [userCount, adminCount]
-                                }]
-                            };
+                                // Function to download the chart as PDF
+                                function downloadPDF() {
+                                    const element = document.getElementById('bar-chart');
+                                    html2pdf()
+                                        .from(element)
+                                        .save('bar-chart.pdf');
+                                }
+                            </script>
 
-                            const options = {
-                                title: {
-                                    display: true,
-                                    text: 'Pie Chart for Users & Admins'
-                                },
-                                responsive: true
-                            };
-
-                            // Create a new pie chart instance
-                            new Chart(document.getElementById('pie-chart'), {
-                                type: 'pie',
-                                data: data,
-                                options: options
-                            });
-                        </script>
-
-                    {% endblock %}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endblock %}
     </div>
 </div>
 </body>
