@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -40,6 +42,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_of_birth = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
+    private Collection $reclamation;
+
+    public function __construct()
+    {
+        $this->reclamation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -174,6 +184,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateOfBirth(\DateTimeInterface $date_of_birth): static
     {
         $this->date_of_birth = $date_of_birth;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, reclamation>
+     */
+    public function getReclamation(): Collection
+    {
+        return $this->reclamation;
+    }
+
+    public function addReclamation(reclamation $reclamation): static
+    {
+        if (!$this->reclamation->contains($reclamation)) {
+            $this->reclamation->add($reclamation);
+            $reclamation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReclamation(reclamation $reclamation): static
+    {
+        if ($this->reclamation->removeElement($reclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($reclamation->getUser() === $this) {
+                $reclamation->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,38 @@
+{# templates/panier/index.html.twig #}
+
+{% extends 'templates/front/index.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block content %}
+    <h1>Mon Panier</h1>
+
+    {% if cart is empty %}
+        <p>Votre panier est vide.</p>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    <tr>
+                        <td>{{ item.produit.nomProduits }}</td>
+                        <td>{{ item.produit.prix }}</td>
+                        <td>{{ item.quantite }}</td>
+                        <td>{{ item.produit.prix * item.quantite }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p>Total du panier : {{ totalCart }}</p>
+
+        <a href="{{ path('checkout') }}" class="btn btn-primary">Passer à la caisse</a>
+    {% endif %}
+{% endblock %}

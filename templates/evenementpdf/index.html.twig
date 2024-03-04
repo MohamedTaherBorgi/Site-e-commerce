@@ -1,0 +1,22 @@
+<h1>Evenement index</h1>
+
+    <table class="table" border ="1">
+        <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Reference produit</th>
+                <th>Type</th>
+                <th>Taux remise</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+                <td>{{ evenement.id }}</td>
+                <td>{{ evenement.refProduit }}</td>
+                <td>{{ evenement.type }}</td>
+                <td>{{ evenement.tauxRemise }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>

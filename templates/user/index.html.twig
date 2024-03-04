@@ -218,7 +218,7 @@
                         </select>
                         <button id="searchButton" class="btn btn-success m-1">Rechercher</button>
                         <button id="clearButton" class="btn btn-warning m-1">Effacer</button>
-                        <button id="download-btn-users">Download PNG</button>
+                        <a href="{{ path('export_user_to_pdf') }}" class="btn btn-danger"><i class="bi bi-file-pdf"></i>Download PDF</a>
 
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>

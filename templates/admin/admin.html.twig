@@ -1,0 +1,411 @@
+{% extends 'baseA.html.twig' %}
+
+{% block body %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <!-- Sidebar Start -->
+        <aside class="left-sidebar" style="width: 250px;">
+            <!-- Ajout de style inline pour définir la largeur -->
+            <!-- Sidebar scroll-->
+            <div>
+                <div class="brand-logo d-flex align-items-center justify-content-between">
+                    <a href="./index.html" class="text-nowrap logo-img">
+                        <img src="assets/images/logoR1.png" width="130" alt=""/>
+                    </a>
+                    <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+                        <i class="ti ti-x fs-8"></i>
+                    </div>
+                </div>
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">
+                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span class="hide-menu">Acceuil</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ path('admin') }}" class="sidebar-link" aria-expanded="false">
+                            <span class="hide-menu">Dashboard 
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
+                            </a>
+                        </li>
+                        <li class="nav-small-cap">
+                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span class="hide-menu">Compte</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-user-plus"></i>
+                            </span>
+                                <span class="hide-menu">Se deconnecter</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- Sidebar End -->
+        <!-- Main wrapper -->
+        <div class="body-wrapper">
+            <!-- Header Start -->
+            <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img src="../assetsA/images/profile/ghada.jpg" alt="" width="35" height="35"
+                                 class="rounded-circle">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                            <div class="message-body">
+                                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                                    <i class="ti ti-user fs-6"></i>
+                                    <p class="mb-0 fs-3">My Profile</p>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Header End -->
+            <h1 style="text-align: center; color: #000000da;">Bienvenue Ghada</h1>
+            <div class="container-fluid">
+                <div class="row">
+
+
+                    <div class="col">
+                        <h1 class="card-title fw-semibold mb-4"
+                            style="text-align: center; color: #000080; text-decoration: underline;">Liste des
+                            réclamations</h1>
+                        <div class="table-responsive" style="overflow-y: auto; max-height: 300px;">
+                            <div class="mb-3">
+
+
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Trier Nom
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item"
+                                           href="{{ path('admin', {'tri_par_nom': true, 'order': 'ASC'}) }}">Ordre
+                                            croissant</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{{ path('admin', {'tri_par_nom': true, 'order': 'DESC'}) }}">Ordre
+                                            décroissant</a></li>
+                                </ul>
+
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownEtatButton"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Filtre par Etat
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownEtatButton">
+                                    <li><a class="dropdown-item" href="{{ path('admin', {'etat': 'all'}) }}">Toutes</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                           href="{{ path('admin', {'etat': 'traitée'}) }}">Traitées</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{{ path('admin', {'etat': 'en cours de traitement'}) }}">En cours de
+                                            traitement</a></li>
+                                </ul>
+                                <div class="row">
+                                    <div class="col" style="text-align: center;">
+                                        <a class="btn btn-success" href="{{ path('pdfadmin') }}"
+                                           style="text-decoration: none;">Générer PDF</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <table class="table table-bordered"
+                                   style="background-color: #f5f5f591; font-size:10px;">
+                                <thead>
+
+                                {% if reclamations %}
+                                <form class="w-search" id="reclamationForm">
+                                    <div class="sidebar-search">
+                                        <div class="input-group custom-search-form">
+                                            <input type="text" id="searchii" class="form-control pl-3"
+                                                   placeholder="Search here">
+                                            <button class="btn btn-outline-secondary" type="submit">Rechercher</button>
+                                        </div>
+                                        <!-- /input-group -->
+                                    </div>
+                                </form>
+                                <ul class="nav" id="side-menu">
+                                    <li>
+                                        <a href="#"><span class="fa arrow"></span></a>
+                                        <ul style="background-color: #cac6c6" class="nav" id="entitiesNav">
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                                <script>
+                                    // Récupération du formulaire et de la liste des réclamations
+                                    const reclamationForm = document.getElementById('reclamationForm');
+                                    const entitiesNav = document.getElementById('entitiesNav');
+
+                                    // Gestion de la soumission du formulaire
+                                    reclamationForm.addEventListener('submit', function (event) {
+                                        event.preventDefault(); // Empêche le rechargement de la page
+
+                                        // Récupération de la valeur de recherche
+                                        const searchQuery = document.getElementById('searchii').value;
+
+                                        // Envoi de la requête AJAX
+                                        const xhr = new XMLHttpRequest();
+                                        xhr.open('GET', '/url-de-votre-api-reclamations?search=' + encodeURIComponent(searchQuery));
+                                        xhr.onload = function () {
+                                            if (xhr.status === 200) {
+                                                // Effacer les résultats précédents
+                                                entitiesNav.innerHTML = '';
+
+                                                // Mettre à jour la liste des réclamations avec les résultats de la recherche
+                                                const reclamationResults = JSON.parse(xhr.responseText);
+                                                reclamationResults.forEach(function (reclamation) {
+                                                    const li = document.createElement('li');
+                                                    li.textContent = reclamation.title; // Supposons que le titre de la réclamation soit dans la propriété "title"
+                                                    entitiesNav.appendChild(li);
+                                                });
+                                            } else {
+                                                console.error('La requête a échoué avec le statut ' + xhr.status);
+                                            }
+                                        };
+                                        xhr.send();
+                                    });
+                                </script>
+
+
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Téléphone</th>
+                                    <th>Email</th>
+                                    <th>Objet</th>
+                                    <th>Message</th>
+                                    <th>Etat</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody id="reclamationsTableBody">
+                                {% for reclamation in reclamations %}
+                                    <tr>
+                                        <td>{{ reclamation.id }}</td>
+                                        <td>{{ reclamation.nom }}</td>
+                                        <td>{{ reclamation.prenom }}</td>
+                                        <td>{{ reclamation.telephone }}</td>
+                                        <td>{{ reclamation.email }}</td>
+                                        <td>{{ reclamation.objet }}</td>
+                                        <td>{{ reclamation.message }}</td>
+                                        <td>{{ reclamation.etat }}</td>
+                                        <td>
+                                            <a href="{{ path('deleteadmin', {'id': reclamation.id}) }}"
+                                               class="btn btn-danger">Supprimer</a>
+                                            <div style="margin-bottom: 10px;"></div> <!-- Ajouter un espace vertical -->
+                                            <a href="{{ path('updateadmin', {'id': reclamation.id}) }}"
+                                               class="btn btn-danger">Modifier</a>
+                                        </td>
+
+
+                                        <td>
+                                            <a href="{{ path('addreponse', {'reclamation_id': reclamation.id}) }}"
+                                               class="btn btn-success">Répondre</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="mb-3">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        Trier ID
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="{{ path('admin', {'order': 'ASC'}) }}">Ordre croissant</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ path('admin', {'order': 'DESC'}) }}">Ordre décroissant</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="card-title fw-semibold mb-4"
+                                style="text-align: center; color: #000080; text-decoration: underline;">Liste des
+                                réponses</h1>
+                            <div class="table-responsive" style="overflow-y: auto; max-height: 300px;">
+                                <table class="table table-bordered"
+                                       style="background-color: #f5f5f591; font-size:10px;">
+                                    <thead>
+                                    <form action="{{ path('rechercherRec') }}" method="GET">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Rechercher par id"
+                                                   name="query">
+                                            <button class="btn btn-outline-secondary" type="submit">Rechercher</button>
+                                        </div>
+                                    </form>
+
+
+                                    <tr>
+                                        <th>ID Réponse</th>
+                                        <th>ID Réclamation</th>
+                                        <th>Email réclamation</th>
+                                        <th>Réponse</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for reponse in reponses %}
+                                        <tr>
+                                            <td>{{ reponse.id }}</td>
+                                            <td>{{ reponse.reclamation.id }}</td>
+                                            <td>{{ reponse.reclamation.email }}</td>
+                                            <td>{{ reponse.reponse }}</td>
+                                            <td>
+                                                <a href="{{ path('updateadminrep', {'id': reponse.id}) }}"
+                                                   class="btn btn-primary">Modifier</a>
+                                                <a href="{{ path('deleteadminrep', {'id': reponse.id}) }}"
+                                                   class="btn btn-danger">Supprimer</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <canvas id="recChart"></canvas>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var ctx = document.getElementById('recChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Traitées', 'En cours de traitement'],
+                            datasets: [{
+                                label: 'Nombre de réclamations',
+                                data: [{{ nbReclamationsTraitees }}, {{ nbReclamationsEnCours }}],
+                                backgroundColor: [
+                                    'rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 99, 132, 0.5)'
+                                ],
+                                borderColor: [
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 99, 132, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                });
+            </script>
+
+
+            <script src="{{ asset('js/jquery/jquery.js') }}"></script>
+            <script>
+                jQuery(document).ready(function () {
+                    var searchReclamationRequest = null;
+                    $("#reclamationForm").submit(function (event) {
+                        event.preventDefault(); // Empêche le rechargement de la page
+
+                        var searchQuery = $("#searchii").val();
+
+                        var reclamationsTableBody = $("#reclamationsTableBody").html('');
+
+                        if (searchQuery.trim() !== '') {
+                            if (searchReclamationRequest !== null)
+                                searchReclamationRequest.abort();
+                            searchReclamationRequest = $.ajax({
+                                type: "GET",
+                                url: "/ajaxsearch",
+                                data: {
+                                    'q': searchQuery
+                                },
+                                dataType: "json",
+                                success: function (result) {
+                                    $.each(result, function (index, reclamation) {
+                                        var row = '<tr>' +
+                                            '<td>' + reclamation.id + '</td>' +
+                                            '<td>' + reclamation.nom + '</td>' +
+                                            '<td>' + reclamation.prenom + '</td>' +
+                                            '<td>' + reclamation.telephone + '</td>' +
+                                            '<td>' + reclamation.email + '</td>' +
+                                            '<td>' + reclamation.objet + '</td>' +
+                                            '<td>' + reclamation.message + '</td>' +
+                                            '<td>' + reclamation.etat + '</td>' +
+                                            '<td>' +
+                                            '<a href="#" class="btn btn-danger delete-reclamation" data-reclamation-id="' + reclamation.id + '">Supprimer</a>' +
+                                            '<div style="margin-bottom: 10px;"></div>' +
+                                            '<a href="#" class="btn btn-danger update-reclamation" data-reclamation-id="' + reclamation.id + '">Modifier</a>' +
+                                            '<div style="margin-bottom: 10px;"></div>' +
+                                            '<a href="#" class="btn btn-success add-response" data-reclamation-id="' + reclamation.id + '">Répondre</a>' +
+                                            '</td>' +
+                                            '</tr>';
+
+                                        reclamationsTableBody.append(row);
+                                    });
+                                }
+                            });
+                        }
+                    });
+
+                    // Gestion de la suppression de réclamation
+                    $(document).on('click', '.delete-reclamation', function (event) {
+                        event.preventDefault();
+                        var reclamationId = $(this).data('reclamation-id');
+                        var deleteUrl = '{{ path("deleteadmin", {"id": "REPLACEME"}) }}'.replace('REPLACEME', reclamationId);
+                        // Effectuer une action avec l'URL de suppression (par exemple, une requête AJAX)
+                    });
+
+                    // Gestion de la modification de réclamation
+                    $(document).on('click', '.update-reclamation', function (event) {
+                        event.preventDefault();
+                        var reclamationId = $(this).data('reclamation-id');
+                        var updateUrl = '{{ path("updateadmin", {"id": "REPLACEME"}) }}'.replace('REPLACEME', reclamationId);
+                        // Effectuer une action avec l'URL de modification (par exemple, rediriger l'utilisateur)
+                    });
+
+                    // Gestion de l'ajout de réponse
+                    $(document).on('click', '.add-response', function (event) {
+                        event.preventDefault();
+                        var reclamationId = $(this).data('reclamation-id');
+                        var addResponseUrl = '{{ path("addreponse", {"reclamation_id": "REPLACEME"}) }}'.replace('REPLACEME', reclamationId);
+                        // Effectuer une action avec l'URL d'ajout de réponse (par exemple, rediriger l'utilisateur)
+                    });
+                });
+            </script>
+        </div>
+    </div>
+{% endblock %}

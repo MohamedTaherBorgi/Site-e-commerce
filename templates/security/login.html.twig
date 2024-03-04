@@ -1,6 +1,9 @@
 {% extends 'security/register.html.twig' %}
 
 {% block content %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
     <form method="post">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail">Email</label>
@@ -21,7 +24,12 @@
         </div>
         <div style="display: flex; justify-content: space-between;">
             <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-            <a href="{{ path("app_register") }}" style="font-weight: bold; font-size: 17px;">Create an account</a>
+            <div class="row" style="text-align: right;">
+                <a href="{{ path("app_register") }}" style="font-weight: bold; font-size: 17px;">Create an account</a>
+                <a href="{{ path("app_reset_password") }}" style="font-weight: bold; font-size: 17px;">Mot de passe
+                    oublié</a>
+            </div>
+
         </div>
     </form>
 {% endblock %}

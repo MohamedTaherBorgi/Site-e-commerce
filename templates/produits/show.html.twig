@@ -1,0 +1,57 @@
+{% extends 'produits/index.html.twig' %}
+
+{% block title %}Détails du Produit{% endblock %}
+
+{% block content %}
+    <h1>Détails du Produit</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ produit.id }}</td>
+            </tr>
+            <tr>
+                <th>Référence</th>
+                <td>{{ produit.referenceProduit }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ produit.nomProduit }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ produit.descriptionProduit }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ produit.prix }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ produit.typeProduit }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ produit.stock }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ produit.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Image(s)</th>
+                <td>
+                    {% for image in produit.images %}
+                        <img src="{{ asset('uploads/images/' ~ image.filename) }}" alt="Image">
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('produits_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('produits_edit', {'id': produit.id}) }}">Modifier</a>
+
+    {{ include('produits/_delete_form.html.twig') }}
+{% endblock %}

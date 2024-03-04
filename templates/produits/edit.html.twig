@@ -1,0 +1,11 @@
+{% extends 'produits/index.html.twig' %}
+
+{% block title %}Modifier Produit{% endblock %}
+
+{% block content %}
+    <h1>Modifier Produit</h1>
+
+    {{ include('produits/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('produits_index') }}">Retour à la liste</a>
+{% endblock %}

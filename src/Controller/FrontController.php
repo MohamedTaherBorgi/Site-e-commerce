@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\Mail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +12,8 @@ class FrontController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
+        $mail = new Mail();
+        $mail->send('medtaherborgi@gmail.com', 'Ahmed Tounsi', 'TEST MAIL', 'BONJOUR');
         return $this->render('front/index.html.twig');
     }
 

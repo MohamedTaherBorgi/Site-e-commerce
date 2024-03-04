@@ -1,0 +1,29 @@
+{% extends 'evenement/index.html.twig' %}
+
+{% block content %}
+    <h1>Cadeau</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cadeau.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom_produit</th>
+                <td>{{ cadeau.nomProduit }}</td>
+            </tr>
+            <tr>
+                <th>Evenement</th>
+                <td>{{ cadeau.evenement }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cadeau_index') }}">back to list</a>
+    <br>
+
+    <a href="{{ path('app_cadeau_edit', {'id': cadeau.id}) }}">edit</a>
+
+    {{ include('cadeau/_delete_form.html.twig') }}
+{% endblock %}

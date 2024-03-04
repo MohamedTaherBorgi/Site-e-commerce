@@ -1,0 +1,11 @@
+{% extends 'types_p/index.html.twig' %}
+
+{% block title %}Modifier Type{% endblock %}
+
+{% block content %}
+    <h1>Modifier Type</h1>
+
+    {{ include('types_p/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('types_index') }}">Retour à la liste</a>
+{% endblock %}

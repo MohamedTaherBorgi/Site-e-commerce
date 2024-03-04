@@ -1,0 +1,11 @@
+{% extends 'types_p/index.html.twig' %}
+
+{% block title %}Ajouter un Type{% endblock %}
+
+{% block content %}
+    <h1>Ajouter un Type</h1>
+
+    {{ include('types_p/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+    <a href="{{ path('types_index') }}">Retour à la liste</a>
+{% endblock %}

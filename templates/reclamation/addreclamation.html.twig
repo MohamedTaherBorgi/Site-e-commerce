@@ -1,0 +1,117 @@
+{% extends 'front/index.html.twig' %}
+
+{% block content %}
+    <!-- Main content -->
+    <div id="main-content" class="main-content">
+
+        <div class="container">
+
+            <div class="row">
+
+                <!--Contact info-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="contact-info-container sm-margin-top-27px xs-margin-bottom-60px xs-margin-top-60px">
+                        <h4 class="box-title">Service de Réclamations</h4>
+                        <p class="frst-desc">Nous vous remercions de votre confiance envers EcoSanté. En nous donnant
+                            l'opportunité de résoudre vos préoccupations, vous nous permettez de renforcer notre
+                            engagement envers l'excellence du service client.</p>
+                        <ul class="addr-info">
+
+                            <li>
+                                <div class="if-item">
+                                    <b class="tie">Télèphone:</b>
+                                    <p class="dsc">(+216) 21 265 844</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="if-item">
+                                    <b class="tie">Email:</b>
+                                    <p class="dsc">EcoSanté@gmail.com</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="if-item">
+                                    <b class="tie">Service:</b>
+                                    <p class="dsc">24h/24 et 7jrs/7</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <br>
+                        <p class="form-row" style="font-size: 14px;">
+                            <button><a href="{{ path('showreclamation') }}" class="btn btn-submit">Voir mes
+                                    réclamations</a></button>
+                        </p>
+
+
+                        <br>
+                        <div class="biolife-social inline">
+                            <ul class="socials">
+                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter"
+                                                                                      aria-hidden="true"></i></a></li>
+                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook"
+                                                                                       aria-hidden="true"></i></a></li>
+                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest"
+                                                                                        aria-hidden="true"></i></a></li>
+                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram"
+                                                                                        aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="contact-form-container sm-margin-top-112px">
+
+                        {{ form_start(form, {'action': path('addreclamation'), 'method': 'POST', 'attr': {'name': 'frm-contact', 'novalidate': 'novalidate'}}) }}
+
+                        <p class="form-row">
+                            {{ form_label(form.nom, "Nom") }}
+                            {{ form_widget(form.nom, {'attr': {'placeholder': 'Votre Nom'}}) }}
+                            {{ form_errors(form.nom) }}
+                        </p>
+
+                        <p class="form-row">
+                            {{ form_label(form.prenom, "Prénom") }}
+                            {{ form_widget(form.prenom, {'attr': {'placeholder': 'Votre Prénom'}}) }}
+                            {{ form_errors(form.prenom) }}
+                        </p>
+
+                        <p class="form-row">
+                            {{ form_label(form.telephone, "Téléphone") }}
+                            {{ form_widget(form.telephone, {'attr': {'placeholder': 'Votre Téléphone'}}) }}
+                            {{ form_errors(form.telephone) }}
+                        </p>
+
+                        <p class="form-row">
+                            {{ form_label(form.email, "Email") }}
+                            {{ form_widget(form.email, {'attr': {'placeholder': 'Votre Email'}}) }}
+                            {{ form_errors(form.email) }}
+                        </p>
+
+                        <p class="form-row">
+                            {{ form_label(form.objet, "Objet") }}
+                            {{ form_widget(form.objet, {'attr': {'placeholder': 'Objet de votre réclamation'}}) }}
+                            {{ form_errors(form.objet) }}
+                        </p>
+
+                        <p class="form-row">
+                            {{ form_label(form.message, "Message") }}
+                            {{ form_widget(form.message, {'attr': {'placeholder': 'Votre Message'}}) }}
+                            {{ form_errors(form.message) }}
+                        </p>
+
+
+                        <p class="form-row">
+                            <button class="btn btn-submit" type="submit">Envoyer</button>
+                        </p>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% block body %}
+        <h1 style="text-align: center; color: #000000da;">Bienvenue Ghada, Votre Dashboard</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <h1 class="card-title fw-semibold mb-4"
+                        style="text-align: center; color: #000080; text-decoration: underline;">Liste des réclamations</h1>
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered"
+                            style="background-color: #f5f5f591; font-size:17px; margin: auto;">
+                            <thead>
+             
+                                <tr>
+                                    <th style="padding: 10px; border: 1px solid #000;">ID</th>
+                                    <th style="padding: 10px; border: 1px solid #000;">Nom</th>
+                                    <th style="padding: 10px; border: 1px solid #000;">Prénom</th>
+                                    <th style="padding: 10px; border: 1px solid #000;">Téléphone</th>
+                                    <th style="padding: 10px; border: 1px solid #000;">Email</th>
+                                    <th style="padding: 10px; border: 1px solid #000;">Objet</th>
+                                    <th style="padding: 10px; border: 1px solid #000;">Message</th>
+                                    <th style="padding: 10px; border: 1px solid #000;">Etat</th>
+                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reclamation in reclamations %}
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #000;">{{ reclamation.id }}</td>
+                                    <td style="padding: 10px; border: 1px solid #000;">{{ reclamation.nom }}</td>
+                                    <td style="padding: 10px; border: 1px solid #000;">{{ reclamation.prenom }}</td>
+                                    <td style="padding: 10px; border: 1px solid #000;">{{ reclamation.telephone }}</td>
+                                    <td style="padding: 10px; border: 1px solid #000;">{{ reclamation.email }}</td>
+                                    <td style="padding: 10px; border: 1px solid #000;">{{ reclamation.objet }}</td>
+                                    <td style="padding: 10px; border: 1px solid #000;">{{ reclamation.message }}</td>
+                                    <td style="padding: 10px; border: 1px solid #000;">{{ reclamation.etat }}</td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+ 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <h1 class="card-title fw-semibold mb-4"
+                        style="text-align: center; color: #000080; text-decoration: underline;">Liste des réponses</h1>
+                    <div class="table-responsive">
+                        <table class="table table-bordered"
+                            style="background-color: #f5f5f591;font-size:17px; margin: auto;">
+            <thead>
+
+                <tr>
+                    <th style="padding: 10px; border: 1px solid #000;">ID Réponse</th>
+                    <th style="padding: 10px; border: 1px solid #000;">ID Réclamation</th>
+                    <th style="padding: 10px; border: 1px solid #000;">Email réclamation</th>
+                    <th style="padding: 10px; border: 1px solid #000;">Réponse</th>
+               
+                </tr>
+            </thead>
+            <tbody>
+                {% for reponse in reponses %}
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #000;">{{ reponse.id }}</td>
+                    <td style="padding: 10px; border: 1px solid #000;">{{ reponse.reclamation.id }}</td>
+                    <td style="padding: 10px; border: 1px solid #000;">{{ reponse.reclamation.email }}</td>
+                    <td style="padding: 10px; border: 1px solid #000;">{{ reponse.reponse }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+
+    <!-- Main wrapper end -->
+</div>
+{% endblock %}
