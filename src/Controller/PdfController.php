@@ -21,8 +21,8 @@ class PdfController extends AbstractController
         $user = $userRepository->findAll();
 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        $pdf->SetCreator("Wael Salah");
-        $pdf->SetAuthor('Wael Salah');
+        $pdf->SetCreator("Taher Borgi");
+        $pdf->SetAuthor('Taher Borgi');
         $pdf->SetTitle('Liste des produits');
         $pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH);
         $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
