@@ -20,8 +20,8 @@ public function exportEvenementsToPdf(EvenementRepository $evenementRepository):
 $evenements = $evenementRepository->findAll();
 
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-$pdf->SetCreator("Wael Salah");
-$pdf->SetAuthor('Wael Salah');
+$pdf->SetCreator("Sara");
+$pdf->SetAuthor('Sara');
 $pdf->SetTitle('Liste des evenements');
 $pdf->setHeaderData(PDF_HEADER_LOGO2, PDF_HEADER_LOGO_WIDTH);
 $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
