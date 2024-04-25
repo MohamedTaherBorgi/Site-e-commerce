@@ -52,21 +52,6 @@ class ReclamationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sid = "ACd6d77606027e6e2fd9e24e08de557375";
-            $token = "f22d146ce126e1376f2908dda1af6bf7";
-            $twilio = new Client($sid, $token);
-
-            $message = $twilio->messages
-                ->create("+216" . $reclamation->getTelephone(),
-                    array(
-                        "from" => "+12765288777",
-                        "body" => "Bonjour, merci d'avoir contacté notre service de réclamation, nous sommes désolés pour tout inconvénient que vous avez rencontré. Votre satisfaction est notre priorité.
-                 Nous vous repondrons dans les plus bref délais. Merci pour votre patience et votre compréhension."
-                    )
-                );
-
-            print($message->sid);
-
             // Associate the reclamation with the logged-in user
             $reclamation->setUser($user);
 
@@ -84,6 +69,22 @@ class ReclamationController extends AbstractController
     }
 
 // Envoi du message Twilio
+    /*
+     $sid    = "ACd6d77606027e6e2fd9e24e08de557375";
+     $token  = "4076d52f3372b4b14d1f4f4d5c05f585";
+     $twilio = new Client($sid, $token);
+
+     $message = $twilio->messages
+         ->create("+216".$reclamation->getTelephone(),
+             array(
+                 "from" => "+12765288777",
+                 "body" => "Bonjour, merci d'avoir contacté notre service de réclamation, nous sommes désolés pour tout inconvénient que vous avez rencontré. Votre satisfaction est notre priorité.
+                 Nous vous repondrons dans les plus bref délais. Merci pour votre patience et votre compréhension."
+             )
+         );
+
+     print($message->sid);
+    */
 
 
     #[Route('/showreclamation', name: 'showreclamation')]
